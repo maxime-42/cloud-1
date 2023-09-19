@@ -1,0 +1,29 @@
+---
+- name: Installer Docker et Docker Compose, Cloner le dépôt, puis exécuter make localement
+  hosts: localhost
+  connection: local  # pour utilise la connexion locale
+
+  tasks:
+    - name: Installer Docker
+      apt:
+        name: docker.io
+        state: present
+      become: yes
+
+    - name: Installer Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+      become: yes
+
+    - name: Cloner le dépôt Git
+      git:
+        repo: git@github.com:maxime-42/Inception.git
+        dest: /path/to/clone/directory  # Remplacez "/path/to/clone/directory" par le répertoire où vous souhaitez cloner le dépôt
+      become: yes
+
+    - name: Exécuter la commande "make"
+      command: make
+      args:
+        chdir: /path/to/clone/directory  # Remplacez "/path/to/clone/directory" par le chemin du répertoire cloné
+      become: yes
