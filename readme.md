@@ -1,5 +1,6 @@
 encours
 
+![Big Pcture](https://github.com/maxime-42/cloud-1/blob/main/big_picture.jpg)
 ## Sources
 
 [Concept of Ansible](https://youtu.be/1id6ERvfozo?si=TwFNt0Lkd79jf1FI)<br>
