@@ -1,0 +1,32 @@
+---
+- name: copy files to destination
+  hosts: all
+  become: yes  # If superuser (sudo) privileges are required
+  tasks:
+
+    - name: Install docker
+      include_role:
+        name: docker
+
+    # - name : Create docker network
+    #   community.docker.docker_network:
+    #     name: 'cloud-1_network'
+
+    - name: no force copy src s dest in the same dir 
+      copy:
+        src: images
+        dest: /tmp/
+        force: yes
+
+
+    - name: build all image 
+      ansible.builtin.command:
+        cmd: /bin/bash /tmp/images/build_images.sh
+
+
+  roles:
+    - nginx_role
+
+  #   - db
+  #   - wordpress
+  #   - phpmyadmin
