@@ -14,4 +14,4 @@ COPY ./entrypoint.sh ./
 COPY ./dump.sql ./
 EXPOSE 3306
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]

@@ -1,32 +1,38 @@
 ---
 - name: copy files to destination
   hosts: all
-  become: yes  # If superuser (sudo) privileges are required
-  tasks:
-
-    - name: Install docker
-      include_role:
-        name: docker
-
-    # - name : Create docker network
-    #   community.docker.docker_network:
-    #     name: 'cloud-1_network'
-
-    - name: no force copy src s dest in the same dir 
-      copy:
-        src: images
-        dest: /tmp/
-        force: yes
-
-
-    - name: build all image 
-      ansible.builtin.command:
-        cmd: /bin/bash /tmp/images/build_images.sh
-
+  # become: yes  # If superuser (sudo) privileges are required
+  # tasks:
+  #   - name: Install docker
+  #     include_role:
+  #       name: docker
 
   roles:
+    - docker
     - nginx_role
+    - wordpress_role
+    - db_role
 
-  #   - db
-  #   - wordpress
-  #   - phpmyadmin
+  become: yes  # If superuser (sudo) privileges are required
+  tasks:
+    - name: Send env
+      copy:
+        src: .env
+        dest: .env
+      
+    - name: Send compose
+      copy:
+        src: docker-compose.yml
+        dest: docker-compose.yml
+
+    # - name: down compose down and delete volume 
+    #   ansible.builtin.command:
+    #     cmd: docker-compose down --volumes --rmi all
+
+    # - name: docker prune
+    #   ansible.builtin.command:
+    #     cmd: docker system prune -f
+
+    - name: Start compose up
+      ansible.builtin.command:
+        cmd: docker-compose up -d

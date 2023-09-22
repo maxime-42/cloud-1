@@ -4,10 +4,12 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64" 
 
   config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
     vb.cpus = 2
     vb.memory = 2048
   end
-
+  config.vm.provision :shell, inline: "apt update -y"
+  config.vm.provision :shell, inline: "apt upgrade -y"
   config.vm.network "private_network", ip: SERVER_IP
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/tmp/id_rsa.pub"
 
@@ -19,5 +21,6 @@ Vagrant.configure("2") do |config|
     rm /tmp/id_rsa.pub
 
   SHELL
+  config.vm.provision :shell, inline: "sudo shutdown -r now"
 
 end

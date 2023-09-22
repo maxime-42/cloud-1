@@ -1,16 +1,9 @@
-# ---
-# - name: Deploy Nginx
-#   community.docker.docker_container:
-#     name: nginx
-#     image: inception_nginx
-#     networks:
-#       - name: 'cloud-1_network'
-#     ports:
-#       - "80:80"
-#       - "443:443"
-#       - "8080:8080" # phpmyadmin
-#     volumes:
-#       - /wordpress:/var/www/app
-#       - /phpmyadmin:/var/www/phpmyadmin
-#     restart_policy: always
-#     state: started
+---
+- name: copy image nginx  to remotely server 
+  copy:
+    src: images/nginx
+    dest: /tmp/images
+
+- name: Build ft_nginx
+  ansible.builtin.command:
+    cmd: docker build -t ft_nginx  /tmp/images/nginx/

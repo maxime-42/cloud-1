@@ -1,0 +1,9 @@
+---
+- name: copy image wordpress  to remotely server 
+  copy:
+    src: images/wordpress
+    dest: /tmp/images
+
+- name: Build ft_nginx
+  ansible.builtin.command:
+    cmd: docker build -t ft_wordpress  /tmp/images/wordpress/
