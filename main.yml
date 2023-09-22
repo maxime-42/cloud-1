@@ -25,13 +25,9 @@
         src: docker-compose.yml
         dest: docker-compose.yml
 
-    # - name: down compose down and delete volume 
-    #   ansible.builtin.command:
-    #     cmd: docker-compose down --volumes --rmi all
-
-    # - name: docker prune
-    #   ansible.builtin.command:
-    #     cmd: docker system prune -f
+    - name: down compose down and delete volume 
+      ansible.builtin.command:
+        cmd: docker-compose down -v
 
     - name: Start compose up
       ansible.builtin.command:

@@ -50,3 +50,7 @@
       - docker
       - docker-compose
     state: present
+
+- name: docker prune
+  ansible.builtin.command:
+    cmd: docker system prune -f
